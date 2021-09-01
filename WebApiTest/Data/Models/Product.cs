@@ -7,10 +7,10 @@ namespace WebApiTest.Data.Models
 {
     public class Product
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Price { get; set; }
-        public bool avalible { get; set; }
+        public bool bought { get; set; }
 
     }
 }

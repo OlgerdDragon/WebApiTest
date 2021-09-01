@@ -29,6 +29,7 @@ namespace WebApiTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<IAllShops, MockShop>();
+            services.AddTransient<IAllProducts, MockProduct>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
