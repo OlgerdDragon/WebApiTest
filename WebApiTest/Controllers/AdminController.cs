@@ -53,25 +53,46 @@ namespace WebApiTest.Controllers
             Shop shop = new Shop();
             foreach (var shopItem in _allShops.AllProducts)
             {
-                if (shopItem.Name == shopName) { shop = shopItem; break; }
+                if (shopItem.Name == shopName) {shop = shopItem; break; }
             }
             int id = shop.ProductList.Count;
             shop.ProductList.Add(Factory.Product(id, productName, productPrice));
             string list = JsonSerializer.Serialize<IEnumerable<Product>>(shop.ProductList);
             return "I add product!    " + list;
         }
-
-        // Lockated ????
-        class Factory
+        [HttpGet]
+        [Route("RemoveProduct")]
+        public string RemoveProduct(string shopName, string productName)
         {
-            public static Product Product(int id, string productName, int productPrice)
-            {
-                Product product = new Product();
-                product.Id = id;
-                product.Name = productName;
-                product.Price = productPrice;
-                return product;
-            }
+            Shop shop = NededShop(shopName);
+            Product product = NededShopForRemove(productName, shop);
+            shop.ProductList.Remove(product);
+            string list = JsonSerializer.Serialize<IEnumerable<Product>>(shop.ProductList);
+            return "I add removed!    " + list;
         }
+
+        Shop NededShop(string shopName)
+        {
+            Shop shop = new Shop();
+            foreach (var shopItem in _allShops.AllProducts)
+            {
+                if (shopItem.Name == shopName) { shop = shopItem; break; }
+            }
+            return shop;
+        }
+        Product NededShopForRemove(string productName, Shop shop)
+        {
+            int id = shop.ProductList.Count;
+            shop.ProductList.Add(Factory.Product(id, "matatabi", 100));
+            shop.ProductList.Add(Factory.Product(id++, "milili", 21));
+            shop.ProductList.Add(Factory.Product(id++, "avto", 1221));
+            Product product = new Product();
+            foreach (var item in shop.ProductList)
+            {
+                if (item.Name == productName) product = item;
+            }
+            return product;
+        }
+
     }
 }
