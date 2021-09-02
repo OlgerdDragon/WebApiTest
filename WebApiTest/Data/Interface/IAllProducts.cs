@@ -8,6 +8,6 @@ namespace WebApiTest.Data.Interface
 {
     public interface IAllProducts
     {
-        IEnumerable<Product> AllProducts(Shop shop);
+        IEnumerable<Product> AllProducts(int shopID);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,14 +10,21 @@ namespace WebApiTest.Data.Mocks
 {
     public class MockProduct : IAllProducts
     {
-        public IEnumerable<Product> AllProducts(Shop shop)
+        public IEnumerable<Product> AllProducts(int shopID)
         {
-            return new List<Product>
+
+            List<Product> productsList = new List<Product>();
+            SqlConnection conn = DBUtils.GetDBConnection();
+            conn.Open();
+            string getSQLBougthList = "SELECT [Products].[ProductID],[ProductName],[ProductPrice] FROM[dbo].[Products] INNER JOIN Availabil ON Availabil.ProductID = [Products].ProductID WHERE ShopID ="+shopID+";";
+            
+            SqlCommand commandBougthList = new SqlCommand(getSQLBougthList, conn);
+            SqlDataReader reader = commandBougthList.ExecuteReader();
+            while (reader.Read())
             {
-                new Product{ Id = 0, Name = "bread", Price = 100},
-                new Product{ Id = 1, Name = "milk", Price = 120},
-                new Product{ Id = 2, Name = "iphone", Price = 1}
-            };
+                productsList.Add(new Product { Id = Convert.ToInt32(reader[0].ToString()), Name = reader[1].ToString(), Price = Convert.ToInt32(reader[0].ToString()) });
+            }
+            return productsList;
         }
     }
 }

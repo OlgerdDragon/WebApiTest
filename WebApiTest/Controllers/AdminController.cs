@@ -31,19 +31,17 @@ namespace WebApiTest.Controllers
         [Route("GetShopsList")]
         public string GetShopsList()
         {
-            string shopList = JsonSerializer.Serialize<IEnumerable<Shop>>(_allShops.AllProducts);
+
+
+            string shopList = JsonSerializer.Serialize<IEnumerable<Shop>>(_allShops.AllShops);
             return shopList;
         }
         [HttpGet]
         [Route("GetProductList")]
-        public string GetProductsList(string shopName)
+        public string GetProductsList(int shopID)
         {
-            Shop shop = new Shop();
-            foreach (var shopItem in _allShops.AllProducts)
-            {
-                if(shopItem.Name==shopName) { shop = shopItem; break; }
-            }
-            string productList = JsonSerializer.Serialize<IEnumerable<Product>>(_allProducts.AllProducts(shop));
+            
+            string productList = JsonSerializer.Serialize<IEnumerable<Product>>(_allProducts.AllProducts(shopID));
             return productList;
         }
         [HttpGet]
@@ -51,7 +49,7 @@ namespace WebApiTest.Controllers
         public string AddProduct(string shopName, string productName, int productPrice)
         {
             Shop shop = new Shop();
-            foreach (var shopItem in _allShops.AllProducts)
+            foreach (var shopItem in _allShops.AllShops)
             {
                 if (shopItem.Name == shopName) {shop = shopItem; break; }
             }
@@ -74,7 +72,7 @@ namespace WebApiTest.Controllers
         Shop NededShop(string shopName)
         {
             Shop shop = new Shop();
-            foreach (var shopItem in _allShops.AllProducts)
+            foreach (var shopItem in _allShops.AllShops)
             {
                 if (shopItem.Name == shopName) { shop = shopItem; break; }
             }
