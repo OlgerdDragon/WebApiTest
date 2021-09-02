@@ -6,7 +6,7 @@ using WebApiTest.Data.Models;
 
 namespace WebApiTest.Data.Interface
 {
-    public interface IAllProducts
+    public interface IProductsService
     {
         IEnumerable<Product> AllProducts(int shopID);
     }

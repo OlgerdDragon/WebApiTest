@@ -14,9 +14,9 @@ namespace WebApiTest.Controllers
     [Route("[controller]")]
     public class AdminController : ControllerBase
     {
-        private readonly IAllShops _allShops;
-        private readonly IAllProducts _allProducts;
-        public AdminController(IAllShops iAllShops, IAllProducts iAllProducts)
+        private readonly IShopsService _allShops;
+        private readonly IProductsService _allProducts;
+        public AdminController(IShopsService iAllShops, IProductsService iAllProducts)
         {
             _allShops = iAllShops;
             _allProducts = iAllProducts;
@@ -64,14 +64,28 @@ namespace WebApiTest.Controllers
         }
 
         [HttpGet]
+        [Route("RemoveShop")]
+        public string RemoveShop(int shopID)
+        {
+            _allShops.RemoveShop(shopID);
+            return "I removed Shop!    ";
+        }
+
+        [HttpGet]
         [Route("RemoveProduct")]
         public string RemoveProduct(int shopID, int productID)
         {
-            
-            return "I removed!    ";
+            _allShops.RemoveProduct(productID);
+            return "I removed Product!    ";
         }
 
-       
+        [HttpGet]
+        [Route("RemoveProductInShop")]
+        public string RemoveProductInShop(int shopID, int productID)
+        {
+            _allShops.RemoveProductInShop(shopID, productID);
+            return "I removed Product in Shop!    ";
+        }
 
     }
 }

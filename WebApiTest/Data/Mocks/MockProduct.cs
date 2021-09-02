@@ -8,7 +8,7 @@ using WebApiTest.Data.Models;
 
 namespace WebApiTest.Data.Mocks
 {
-    public class MockProduct : IAllProducts
+    public class MockProduct : IProductsService
     {
         public IEnumerable<Product> AllProducts(int shopID)
         {

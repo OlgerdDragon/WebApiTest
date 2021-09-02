@@ -28,8 +28,8 @@ namespace WebApiTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAllShops, MockShop>();
-            services.AddTransient<IAllProducts, MockProduct>();
+            services.AddTransient<IShopsService, MockShop>();
+            services.AddTransient<IProductsService, MockProduct>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

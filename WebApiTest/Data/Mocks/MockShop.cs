@@ -8,7 +8,7 @@ using WebApiTest.Data.Models;
 
 namespace WebApiTest.Data.Mocks
 {
-    public class MockShop : IAllShops
+    public class MockShop : IShopsService
     {
         SqlConnection conn = DBUtils.GetDBConnection();
         
@@ -59,24 +59,24 @@ namespace WebApiTest.Data.Mocks
         public void RemoveShop(int shopID)
         {
             conn.Open();
-            string getSQLAddShop =  "DELETE FROM[dbo].[Shops] WHERE ShopID = " + shopID + "; ";
-            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            string getSQLRemoveShop =  "DELETE FROM[dbo].[Shops] WHERE ShopID = " + shopID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLRemoveShop, conn);
             SqlDataReader reader = commandAddShop.ExecuteReader();
             conn.Close();
         }
         public void RemoveProduct(int productID)
         {
             conn.Open();
-            string getSQLAddShop = "DELETE FROM[dbo].[Products] WHERE ProductID = " + productID + "; ";
-            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            string getSQLRemoveProduct = "DELETE FROM[dbo].[Products] WHERE ProductID = " + productID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLRemoveProduct, conn);
             SqlDataReader reader = commandAddShop.ExecuteReader();
             conn.Close();
         }
         public void RemoveProductInShop(int shopID, int productID)
         {
             conn.Open();
-            string getSQLAddShop = "DELETE FROM[dbo].[Products] WHERE ShopID = " + shopID + " AND ProductID = " + productID + "; ";
-            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            string getSQLRemoveProductInShop = "DELETE FROM[dbo].[Products] WHERE ShopID = " + shopID + " AND ProductID = " + productID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLRemoveProductInShop, conn);
             SqlDataReader reader = commandAddShop.ExecuteReader();
             conn.Close();
         }
