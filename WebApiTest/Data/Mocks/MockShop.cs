@@ -55,5 +55,31 @@ namespace WebApiTest.Data.Mocks
             SqlDataReader reader = commandAddShop.ExecuteReader();
             conn.Close();
         }
+
+        public void RemoveShop(int shopID)
+        {
+            conn.Open();
+            string getSQLAddShop =  "DELETE FROM[dbo].[Shops] WHERE ShopID = " + shopID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            SqlDataReader reader = commandAddShop.ExecuteReader();
+            conn.Close();
+        }
+        public void RemoveProduct(int productID)
+        {
+            conn.Open();
+            string getSQLAddShop = "DELETE FROM[dbo].[Products] WHERE ProductID = " + productID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            SqlDataReader reader = commandAddShop.ExecuteReader();
+            conn.Close();
+        }
+        public void RemoveProductInShop(int shopID, int productID)
+        {
+            conn.Open();
+            string getSQLAddShop = "DELETE FROM[dbo].[Products] WHERE ShopID = " + shopID + " AND ProductID = " + productID + "; ";
+            SqlCommand commandAddShop = new SqlCommand(getSQLAddShop, conn);
+            SqlDataReader reader = commandAddShop.ExecuteReader();
+            conn.Close();
+        }
+
     }
 }
