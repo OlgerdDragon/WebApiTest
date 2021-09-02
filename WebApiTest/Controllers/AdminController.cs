@@ -31,8 +31,6 @@ namespace WebApiTest.Controllers
         [Route("GetShopsList")]
         public string GetShopsList()
         {
-
-
             string shopList = JsonSerializer.Serialize<IEnumerable<Shop>>(_allShops.AllShops);
             return shopList;
         }
@@ -40,57 +38,40 @@ namespace WebApiTest.Controllers
         [Route("GetProductList")]
         public string GetProductsList(int shopID)
         {
-            
             string productList = JsonSerializer.Serialize<IEnumerable<Product>>(_allProducts.AllProducts(shopID));
             return productList;
         }
         [HttpGet]
-        [Route("AddProduct")]
-        public string AddProduct(string shopName, string productName, int productPrice)
+        [Route("AddProductInBd")]
+        public string AddProduct(int productID, string productName, int price)
         {
-            Shop shop = new Shop();
-            foreach (var shopItem in _allShops.AllShops)
-            {
-                if (shopItem.Name == shopName) {shop = shopItem; break; }
-            }
-            int id = shop.ProductList.Count;
-            shop.ProductList.Add(Factory.Product(id, productName, productPrice));
-            string list = JsonSerializer.Serialize<IEnumerable<Product>>(shop.ProductList);
-            return "I add product!    " + list;
+            _allShops.AddProduct(productID, productName, price);
+            return "I add product in BD!    :)";
         }
         [HttpGet]
-        [Route("RemoveProduct")]
-        public string RemoveProduct(string shopName, string productName)
+        [Route("AddProductInShop")]
+        public string AddProductInShops(int shopID, int productID)
         {
-            Shop shop = NededShop(shopName);
-            Product product = NededShopForRemove(productName, shop);
-            shop.ProductList.Remove(product);
-            string list = JsonSerializer.Serialize<IEnumerable<Product>>(shop.ProductList);
-            return "I add removed!    " + list;
+            _allShops.AddProductInShop(shopID, productID);
+            return "I add product in shop!    :)";
+        }
+        [HttpGet]
+        [Route("AddShop")]
+        public string AddShop(int shopID, string shopName)
+        {
+            _allShops.AddShop(shopID, shopName);
+            return "I add shop!    :)";
         }
 
-        Shop NededShop(string shopName)
+        [HttpGet]
+        [Route("RemoveProduct")]
+        public string RemoveProduct(int shopID, int productID)
         {
-            Shop shop = new Shop();
-            foreach (var shopItem in _allShops.AllShops)
-            {
-                if (shopItem.Name == shopName) { shop = shopItem; break; }
-            }
-            return shop;
+            
+            return "I removed!    ";
         }
-        Product NededShopForRemove(string productName, Shop shop)
-        {
-            int id = shop.ProductList.Count;
-            shop.ProductList.Add(Factory.Product(id, "matatabi", 100));
-            shop.ProductList.Add(Factory.Product(id++, "milili", 21));
-            shop.ProductList.Add(Factory.Product(id++, "avto", 1221));
-            Product product = new Product();
-            foreach (var item in shop.ProductList)
-            {
-                if (item.Name == productName) product = item;
-            }
-            return product;
-        }
+
+       
 
     }
 }
