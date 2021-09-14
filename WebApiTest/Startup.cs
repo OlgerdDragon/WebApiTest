@@ -33,8 +33,7 @@ namespace WebApiTest
             services.AddTransient<IShopsService, MockShop>();
             services.AddTransient<IProductsService, MockProduct>();
             services.AddControllers();
-            services.AddDbContext<TodoContext>(opt =>
-                                               opt.UseInMemoryDatabase("TodoList"));
+            services.AddDbContext<TodoContext>(options => options.UseSqlServer(connectionString, sqlOptions => { sqlOptions.EnableRetryOnFailure(); }));
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApiTest", Version = "v1" });
