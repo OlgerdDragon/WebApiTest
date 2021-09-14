@@ -33,6 +33,7 @@ namespace WebApiTest
             services.AddTransient<IShopsService, MockShop>();
             services.AddTransient<IProductsService, MockProduct>();
             services.AddControllers();
+            string connectionString = "Server=tcp:shift-test.database.windows.net,1433;Initial Catalog=dev;Persist Security Info=False;User ID=dev;Password=R4zypgHmvz9ZE9Ek;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
             services.AddDbContext<TodoContext>(options => options.UseSqlServer(connectionString, sqlOptions => { sqlOptions.EnableRetryOnFailure(); }));
             //services.AddSwaggerGen(c =>
             //{
